@@ -1,19 +1,15 @@
-const Discord = require('discord.js');
-const { token } = require('./token.json');
-const client = new Discord.Client();
+from discord.ext import commands 
+import discord
+import json
 
-// 連上線時的事件
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-});
+bot = commands.Bot(command_prefix="!")
 
-// 當 Bot 接收到訊息時的事件
-client.on('message', msg => {
-    // 如果訊息的內容是 'ping'
-    if (msg.content === 'ping') {
-        // 則 Bot 回應 'Pong'
-        msg.reply('pong');
-    }
-});
+with open('items.json', "r", encoding = "utf8") as file:
+    data = json.load(file)
+    
 
-client.login(token);
+@bot.event
+async def on_ready():
+    print("Bot in ready")
+    
+bot.run(data['token']) 
